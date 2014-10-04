@@ -48,6 +48,8 @@ public class CSharpPrinter extends CSVisitor {
 	public void print(CSCompilationUnit node) {
 		_lastPrintedCommentIndex = 0;
 		_comments = node.comments();
+		//	print comments before Java package declaration - usually this is license text
+		printPrecedingComments(node.getPackagePosition());
 		try {
 			node.accept(this);
 		} finally {
@@ -109,6 +111,7 @@ public class CSharpPrinter extends CSVisitor {
 	}
 
 	public void visit(CSCompilationUnit node) {
+		printPrecedingComments(node);
 		beginEnclosingIfDefs(node);
 		List<CSUsing> usings = printableUsingList(node.usings());
 		for (CSUsing using : usings) {

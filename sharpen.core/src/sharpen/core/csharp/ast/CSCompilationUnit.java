@@ -33,6 +33,7 @@ public class CSCompilationUnit extends CSNode {
 	private final List<CSUsing> _usings = new ArrayList<CSUsing>();
 	private final List<CSType> _types = new ArrayList<CSType>();
 	private final List<CSLineComment> _comments = new ArrayList<CSLineComment>();
+	private int _packagePosition;
 
 	public void namespace(String value) {
 		_namespace = value;
@@ -99,5 +100,13 @@ public class CSCompilationUnit extends CSNode {
 
 	public List<CSLineComment> comments() {
 		return Collections.unmodifiableList(_comments);
+	}
+
+	public int getPackagePosition() {
+		return _packagePosition; 
+	}
+	
+	public void setPackagePosition(int startPosition) {
+		_packagePosition = startPosition; 
 	}
 }

@@ -145,6 +145,13 @@ public class CSharpBuilder extends ASTVisitor {
 		        .getLength())));
 		return false;
 	}
+	
+	@Override
+	public boolean visit(BlockComment node) {
+		_compilationUnit.addComment(new CSLineComment(node.getStartPosition(), getText(node.getStartPosition(), node
+		        .getLength())));
+		return false;
+	};
 
 	private String getText(int startPosition, int length) {
 		try {
@@ -264,6 +271,7 @@ public class CSharpBuilder extends ASTVisitor {
 	}
 
 	public boolean visit(PackageDeclaration node) {
+		_compilationUnit.setPackagePosition(node.getStartPosition());
 		String namespace = node.getName().toString();
 		_compilationUnit.namespace(mappedNamespace(namespace));
 		
@@ -1160,10 +1168,38 @@ public class CSharpBuilder extends ASTVisitor {
 				summaryNode.addFragment(new CSDocTextNode(fragment));
 			}
 			member.addDoc(summaryNode);
-			member.addDoc(createTagNode(member, "remarks", element, false));
+			CSDocNode remarksNode = createTagNode(member, "remarks", element, false);
+			if(!summaryEqualsRemarks(summary, remarksNode))
+				member.addDoc(remarksNode);
 		} else {
 			member.addDoc(createTagNode(member, "summary", element, false));
 		}
+	}
+	
+	private boolean summaryEqualsRemarks(List<String> summaryList, CSDocNode remarksNode) {
+		if(!(remarksNode instanceof CSDocTagNode)){
+			return false;
+		}
+		
+		String summary = "";
+		
+		for(String str : summaryList){
+			summary += str.trim();
+		}
+		
+		String remarksStr = "";
+		
+		CSDocTagNode remarks = (CSDocTagNode) remarksNode;
+		for(CSDocNode node : remarks.fragments()){
+			if(!(node instanceof CSDocTextNode)){
+				return false;
+			}
+			
+			CSDocTextNode remarksDoc = (CSDocTextNode)node;			
+			remarksStr += remarksDoc.text().trim();
+		}
+		
+		return summary.equalsIgnoreCase(remarksStr);
 	}
 
 	private List<String> getFirstSentence(TagElement element) {
