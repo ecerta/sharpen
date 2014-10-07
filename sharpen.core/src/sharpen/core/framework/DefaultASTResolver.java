@@ -27,7 +27,7 @@ import org.eclipse.jdt.core.dom.*;
 
 public class DefaultASTResolver implements ASTResolver {
 	
-	private final List<CompilationUnitPair> _pairs;
+private final List<CompilationUnitPair> _pairs;
 	
 	public DefaultASTResolver(List<CompilationUnitPair> pairs) {
 		_pairs = pairs;
