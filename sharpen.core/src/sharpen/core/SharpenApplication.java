@@ -1,51 +1,26 @@
-/* Copyright (C) 2004 - 2008  Versant Inc.  http://www.db4o.com
-
-This file is part of the sharpen open source java to c# translator.
-
-sharpen is free software; you can redistribute it and/or modify it under
-the terms of version 2 of the GNU General Public License as published
-by the Free Software Foundation and as clarified by db4objects' GPL 
-interpretation policy, available at
-http://www.db4o.com/about/company/legalpolicies/gplinterpretation/
-Alternatively you can write to db4objects, Inc., 1900 S Norfolk Street,
-Suite 350, San Mateo, CA 94403, USA.
-
-sharpen is distributed in the hope that it will be useful, but WITHOUT ANY
-WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. */
-
 package sharpen.core;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.equinox.app.*;
-import org.eclipse.jdt.core.*;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 
-import sharpen.core.framework.*;
-import sharpen.core.io.*;
+import sharpen.core.framework.ConsoleProgressMonitor;
+import sharpen.core.io.IO;
 
-/**
- * Start this application with: <code>
- * java -cp startup.jar org.eclipse.core.launcher.Main -application sharpen.core.application resourcePath
- * </code>
- */
-public class SharpenApplication implements IApplication {
-
+public class SharpenApplication {
 	private SharpenCommandLine _args;
 
-	public Object start(IApplicationContext context) throws Exception {
+	public void start(String[] args) throws Exception {
 		try {
-			String[] args = argv(context);
 			_args = SharpenCommandLine.parse(args);
 			System.err.println("Configuration Class: " + _args.configurationClass);
+			System.err.println("Configuration Class: " +_args.runtimeTypeName);
 			Sharpen.getDefault().configuration(ConfigurationFactory.newConfiguration(_args.configurationClass, _args.runtimeTypeName));
 			safeRun();
 		} catch (Exception x) {
@@ -53,16 +28,9 @@ public class SharpenApplication implements IApplication {
 			x.printStackTrace();
 			throw x;
 		}
-		return IApplication.EXIT_OK;
 	}
 
-	private String[] argv(IApplicationContext context) {
-		return (String[])context.getArguments().get(IApplicationContext.APPLICATION_ARGS);
-	}
 	
-	public void stop() {
-		
-	}
 
 	void safeRun() throws Exception {
 
@@ -76,29 +44,45 @@ public class SharpenApplication implements IApplication {
 	}
 
 	private void convert() throws CoreException, IOException, InterruptedException {
-		JavaProject project = setUpJavaProject();
-		
-		List<ICompilationUnit> units = sortedByName(project.getAllCompilationUnits());
-		
-		convertTo(units, resetTargetFolder(project));
+		JavaProjectCmd project = setUpJavaProject();
+		convertTo(project);
 	}
 
-	private IProject resetTargetFolder(JavaProject project) throws CoreException {
+	private String resetTargetFolder(JavaProjectCmd project) throws IOException {
 		return deleteTargetProject(project);
 	}
 
-	private void convertTo(List<ICompilationUnit> units, IProject targetFolder)
+	private void convertTo(JavaProjectCmd project)
 			throws IOException, CoreException, InterruptedException {
+		List<String> units = sortedByName(project.getAllCompilationUnits());
+		String targetFolder =resetTargetFolder(project);
 		SharpenConversionBatch converter = new SharpenConversionBatch(getConfiguration());
 		converter.setContinueOnError(_args.continueOnError);
 		converter.setProgressMonitor(newProgressMonitor());
 		converter.setTargetProject(targetFolder);
-		converter.setSource(units);
+		converter.setsourceFiles(units);
+		converter.setsourcePathEntries(project.getSourceFolder());
+		converter.setclassPathEntries(project.getclassPath());
 		converter.run();
 	}
 
-	private IProject deleteTargetProject(JavaProject project) throws CoreException {
-		return JavaModelUtility.deleteTargetProject(project.getJavaProject());
+	private String deleteTargetProject(JavaProjectCmd project) throws IOException 
+	{
+		String target = project.getProjectPath() + "/" + project.getProjectName() + SharpenConstants.SHARPENED_PROJECT_SUFFIX;
+		File targetfile = new File(target);
+		if (targetfile.exists()) {
+			delete(targetfile);
+		}
+		return target;
+	}
+	
+	private void delete(File f) throws IOException {
+	  if (f.isDirectory()) {
+	    for (File c : f.listFiles())
+	      delete(c);
+	  }
+	  if (!f.delete())
+	    throw new FileNotFoundException("Failed to delete file: " + f);
 	}
 
 	private Configuration getConfiguration() throws IOException {
@@ -174,10 +158,10 @@ public class SharpenApplication implements IApplication {
 		return configuration;
 	}
 
-	private List<ICompilationUnit> sortedByName(List<ICompilationUnit> units) {
-		Collections.sort(units, new Comparator<ICompilationUnit>() {
-			public int compare(ICompilationUnit o1, ICompilationUnit o2) {
-				return o1.getElementName().compareTo(o2.getElementName());
+	private List<String> sortedByName(List<String> units) {
+		Collections.sort(units, new Comparator<String>() {
+			public int compare(String o1, String o2) {
+				return o1.compareTo(o2);
 			}
 		});
 		return units;
@@ -187,15 +171,18 @@ public class SharpenApplication implements IApplication {
 		return new ConsoleProgressMonitor();
 	}
 
-	JavaProject setUpJavaProject() throws CoreException {
+	JavaProjectCmd setUpJavaProject() throws CoreException {
 		ods("project: " + _args.project);
-		return new JavaProject.Builder(newProgressMonitor(), _args.project)
-			.classpath(_args.classpath)
-			.sourceFolders(_args.sourceFolders)
-			.project;
+		JavaProjectCmd jpCmd = new JavaProjectCmd();
+		jpCmd.setProjectName(_args.project);
+		jpCmd.setProjectPath(_args.projectPath);
+		jpCmd.setSourceFolder(_args.sourceFolders);
+		jpCmd.setclassPath(_args.classpath);
+		return jpCmd;
 	}
 	
 	private static void ods(String message) {
 		System.out.println(message);
-	}	
+	}
 }
+
