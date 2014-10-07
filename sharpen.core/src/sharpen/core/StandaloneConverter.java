@@ -21,6 +21,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 package sharpen.core;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 import sharpen.core.csharp.ast.CSCompilationUnit;
 
 import org.eclipse.jdt.core.dom.AST;
@@ -41,10 +45,29 @@ public class StandaloneConverter extends SharpenConversion {
 			throw new IllegalStateException("source and writer must be set");
 		}
 		
-		_parser.setSource(_source);
+		try {
+			_parser.setSource(ReadFileToCharArray(_source));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		_parser.setResolveBindings(true);
         
         CompilationUnit ast = (CompilationUnit) _parser.createAST(null);
         return run(ast);
+	}
+	
+	private char[] ReadFileToCharArray(String filePath) throws IOException {
+		StringBuilder fileData = new StringBuilder(1000);
+		BufferedReader reader = new BufferedReader(new FileReader(filePath));
+ 
+		char[] buf = new char[10];
+		int numRead = 0;
+		while ((numRead = reader.read(buf)) != -1) {
+			String readData = String.valueOf(buf, 0, numRead);
+			fileData.append(readData);
+			buf = new char[1024];
+		}
+		reader.close();
+		return  fileData.toString().toCharArray();	
 	}
 }
