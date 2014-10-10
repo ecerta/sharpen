@@ -11,10 +11,8 @@
   <url>http://maven.apache.org</url>
 
   <properties>
-    <finalName>${project.artifactId}-${project.version}</finalName>
-  </properties>
-  <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	 <finalName>${project.artifactId}-${project.version}</finalName>
   </properties>
 
   <dependencies>
