@@ -7,11 +7,9 @@ deploy:
   provider: releases
   api_key:
     secure: "biqWHeia1J9FPDtujYYROXefqRdRbpP8GAeUVNeBm2A4dW5muI5CG0LirQlOQ/wvKnPbJzhXwh3oXvPdbiAEGGCozpmy/P33m3C3tDP+fCe/C1hWwu6ib2fslaaPYnH2X0xX2lc8qHKxRGZsLE3uHFubr5/7IRl9z+r8ia32b+4="
-  file: 
-  -sharpen.core/target/sharpen.jar
-  -sharpen.core/target/sharpen$-jar-with-dependencies.jar
+  file:  sharpen.core/target/sharpen$-jar-with-dependencies.jar
+
   skip_cleanup: true
   on:
-    repo: avasp/sharpen
-    all_branches: true
     tags: true
+    all_branches: true
