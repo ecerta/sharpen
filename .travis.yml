@@ -9,5 +9,4 @@ deploy:
   file: sharpen.core/target/sharpen$-jar-with-dependencies.jar
   skip_cleanup: true
   on:
-    repo: avasp/sharpen
     all_branches: true
