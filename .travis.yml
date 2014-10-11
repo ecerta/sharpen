@@ -3,8 +3,9 @@ before_install: mvn install assembly:single -DskipTests=true -DfinalName=sharpen
 install: mvn test
 deploy:
   provider: releases
-  api_key:
-    secure: rnPlroNjSSnd0sPMZimjvt+A3wv9yNwDoKtdj1j3elxdkU/ANYyXZZEvZ9lVr8/iWVmixEem74WftsqtDhglRhu1rugdxJLJx7+8KOXQu8IJu0iEsd/YgjZrASV9b73ejGIZngay4XFRJco0wXjkS42443SrkQ2c/iQmquL8WjM=
+  user: avasp
+  password:
+    secure: qGaXQX/OV4RnGG6ARh6F8zEA0QjFX5p4deKvcRBFrdrnbG5ufpP1Z0cw0Oa/n9M35/7BlQMGNjoh6Nj2F9yax0m25WbU80Aw4HSiste6o6lD+OC3ngV+X7Lsezfxt8ScxHV22gUZxdsn/9MWLls1a18n+cK9uUMIQBmHvSPyUHk=
   file: sharpen.core/target/sharpen$-jar-with-dependencies.jar
   skip_cleanup: true
   on:
