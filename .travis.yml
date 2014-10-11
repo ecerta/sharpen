@@ -1,16 +1,11 @@
 language: java
-
 before_install: mvn install assembly:single -DskipTests=true -DfinalName=sharpen
 install: mvn test
-
 deploy:
   provider: releases
   api_key:
-   secure: "mIa32/rhp/PAfZGOT3Sn8lX4RxCo7metkRMa01bRTjJD4swjeOC7EGDPeEdSQ3heMNvTB
-koHanex2Ne8OcWOGWhMkdNUIRT6hixKSmOeVG1AvLqxurJ805/X/ybY3hVh45iW81BHqI+JFe0MP4wcO
-ZlburLB+02AOvEQxU5wV0Q=" 
-  file:  sharpen.core/target/sharpen$-jar-with-dependencies.jar
-
+    secure: rnPlroNjSSnd0sPMZimjvt+A3wv9yNwDoKtdj1j3elxdkU/ANYyXZZEvZ9lVr8/iWVmixEem74WftsqtDhglRhu1rugdxJLJx7+8KOXQu8IJu0iEsd/YgjZrASV9b73ejGIZngay4XFRJco0wXjkS42443SrkQ2c/iQmquL8WjM=
+  file: sharpen.core/target/sharpen$-jar-with-dependencies.jar
   skip_cleanup: true
   on:
     repo: avasp/sharpen
