@@ -11,4 +11,5 @@ deploy:
 
   skip_cleanup: true
   on:
+    repo: avasp/sharpen
     all_branches: true
