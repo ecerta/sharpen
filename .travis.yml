@@ -6,7 +6,9 @@ install: mvn test
 deploy:
   provider: releases
   api_key:
-    secure: "biqWHeia1J9FPDtujYYROXefqRdRbpP8GAeUVNeBm2A4dW5muI5CG0LirQlOQ/wvKnPbJzhXwh3oXvPdbiAEGGCozpmy/P33m3C3tDP+fCe/C1hWwu6ib2fslaaPYnH2X0xX2lc8qHKxRGZsLE3uHFubr5/7IRl9z+r8ia32b+4="
+   secure: "mIa32/rhp/PAfZGOT3Sn8lX4RxCo7metkRMa01bRTjJD4swjeOC7EGDPeEdSQ3heMNvTB
+koHanex2Ne8OcWOGWhMkdNUIRT6hixKSmOeVG1AvLqxurJ805/X/ybY3hVh45iW81BHqI+JFe0MP4wcO
+ZlburLB+02AOvEQxU5wV0Q=" 
   file:  sharpen.core/target/sharpen$-jar-with-dependencies.jar
 
   skip_cleanup: true
