@@ -22,11 +22,16 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 package sharpen.core;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import sharpen.core.csharp.ast.CSCompilationUnit;
 
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -38,6 +43,15 @@ public class StandaloneConverter extends SharpenConversion {
 	public StandaloneConverter(Configuration configuration) {
 		super(configuration);
 		_parser = ASTParser.newParser(AST.JLS4);
+		_parser.setKind(ASTParser.K_COMPILATION_UNIT);
+		
+		@SuppressWarnings("unchecked")
+		Map<String, String> options = JavaCore.getOptions();
+		options.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_1_7);
+		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM,
+				JavaCore.VERSION_1_7);
+		options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_7);
+		_parser.setCompilerOptions(options);
 	}
 	
 	public CSCompilationUnit run() {
@@ -46,8 +60,16 @@ public class StandaloneConverter extends SharpenConversion {
 		}
 		
 		try {
+			File sourceFile = new File(_source);
+			List<String> sourcefilePaths = new ArrayList<String>(); 
+			sourcefilePaths.add(sourceFile.getPath());
+			String []sourcefilearr = new String[sourcefilePaths.size()];
+			sourcefilePaths.toArray(sourcefilearr);
+			_parser.setEnvironment(null,sourcefilearr,
+					null, true);
 			_parser.setSource(ReadFileToCharArray(_source));
 		} catch (IOException e) {
+			System.out.println("Error in conversion");
 			e.printStackTrace();
 		}
 		_parser.setResolveBindings(true);
