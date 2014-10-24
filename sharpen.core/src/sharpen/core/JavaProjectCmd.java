@@ -1,6 +1,10 @@
 package sharpen.core;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,6 +96,45 @@ public class JavaProjectCmd {
           }
         }		
   	}
+	
+	public String createCompilationUnit(String packageName, String cuName, String source) throws IOException 
+	{
+		String pathForsourcefile = packageName;
+		File srcPath = new File(pathForsourcefile);
+		if (!srcPath.exists()){
+			srcPath.mkdir();
+		}
+		String sourcefileName = pathForsourcefile + "/" + cuName;
+		projectPath =packageName.substring(0,packageName.lastIndexOf("/src"));
+		sourceFolder = projectPath + "/src";
+		projectName = projectPath.substring(projectPath.lastIndexOf("/")+1);
+		File sourcefile = new File(sourcefileName);
+		sourcefile.createNewFile();
+        FileWriter fw = new FileWriter(sourcefile);
+        fw.write(source);
+        fw.close();
+		return	sourcefileName;
+	}
 
-
+	private void delete(File f) throws IOException {
+		  if (f.isDirectory()) {
+		    for (File c : f.listFiles())
+		      delete(c);
+		  }
+		  if (!f.delete())
+		    throw new FileNotFoundException("Failed to delete file: " + f);
+		}
+	
+	public void deleteProject() {
+			String target = projectPath;
+			File targetfile = new File(target);
+			if (targetfile.exists()) {
+				try {
+					delete(targetfile);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}		
+	}
 }
