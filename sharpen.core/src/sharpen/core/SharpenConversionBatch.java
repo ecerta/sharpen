@@ -25,6 +25,7 @@ import java.io.*;
 
 import sharpen.core.csharp.ast.CSCompilationUnit;
 import sharpen.core.framework.*;
+
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
@@ -84,15 +85,13 @@ public class SharpenConversionBatch extends ConversionBatch {
 	 */
 	private void saveConvertedFile(String cu, CSCompilationUnit csModule, StringWriter convertedContents) throws  IOException, CoreException {
 		String newName = csModule.elementName();
+		
 		if (newName == null) {
 			newName = getNameWithoutExtension(cu) + ".cs";
 		}
-
 		String folder = targetFolderForCompilationUnit(cu, csModule.namespace());
 		ensureFolder(folder);
-		
 		newName = folder + "/" + newName;
-		
 		File fnewName = new File(newName);
 		fnewName.createNewFile();
         FileWriter fw = new FileWriter(fnewName);
@@ -115,7 +114,7 @@ public class SharpenConversionBatch extends ConversionBatch {
 		// compute target folder based on packageName
 		String targetFolder = _targetProjectPath;
 		
-		String cuParent = new File(cu).getPath();
+		String cuParent = new File(cu).getParent().replace("\\", "/");
 		String packageName = generatedNamespace == null
 			? cuParent.substring(cuParent.lastIndexOf("/"))
 			: cleanupNamespace(generatedNamespace);
@@ -135,7 +134,9 @@ public class SharpenConversionBatch extends ConversionBatch {
 	}
 	
 	private String getNameWithoutExtension(String name) {
-		return name.split("\\.")[0];
+		File f = new File(name);
+		String filename = f.getName();
+		return filename.substring(0,filename.lastIndexOf("."));
 	}
 
 	public Configuration getConfiguration() {
