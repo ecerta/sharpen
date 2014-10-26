@@ -78,10 +78,10 @@ public class BatchConverterTestCase extends AbstractConversionTestCase {
 		TestCaseResource resource = new TestCaseResource(path);
 		String cu = createCompilationUnit(resource,"TargetProject");
 		
-		String targetProject= projecttempLocation +"/" +
+		String targetProject= projecttempLocation +"/temp/" +
 				"TargetProject/TargetProject.net"; 
 
-		String targetFolder =  projecttempLocation +"/" +
+		String targetFolder =  projecttempLocation +"/temp/" +
 				"TargetProject/src";
 
 		try {
