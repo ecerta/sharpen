@@ -56,6 +56,8 @@ class SharpenCommandLineParser extends CommandLineParser {
 
 	@Override
 	protected void processArgument(String arg) {
+		//Making compatible both for Unix & Window based directory structure
+		arg = arg.replace("\\", "/");
 		if (_cmdLine.project != null) {
 			illegalArgument(arg);
 		}
