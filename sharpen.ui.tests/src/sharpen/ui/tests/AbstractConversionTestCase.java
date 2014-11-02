@@ -33,7 +33,7 @@ import sharpen.core.*;
 public abstract class AbstractConversionTestCase  {
 
 	protected JavaProjectCmd _project;
-	private String projectName="prjtod";
+	private String projectName="DPrj";
 	//To Run from MAVEN
 	protected String projecttempLocation = System.getProperty("user.dir") + "/sharpen.core/target/testcases";
 	//To Run From Eclipse GUI
@@ -264,7 +264,7 @@ public abstract class AbstractConversionTestCase  {
 	}
 
 	protected String getConvertedProject() {
-		return _project.getProjectName() + SharpenConstants.SHARPENED_PROJECT_SUFFIX;
+		return _project.getProjectName() + "_net";//SharpenConstants.SHARPENED_PROJECT_SUFFIX;
 	}
 
 	
