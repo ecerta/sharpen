@@ -33,6 +33,7 @@ import sharpen.core.*;
 public abstract class AbstractConversionTestCase  {
 
 	protected JavaProjectCmd _project;
+	private String projectName="prjtod";
 	//To Run from MAVEN
 	protected String projecttempLocation = System.getProperty("user.dir") + "/sharpen.core/target/testcases";
 	//To Run From Eclipse GUI
@@ -59,7 +60,7 @@ public abstract class AbstractConversionTestCase  {
 	 */
 	protected String createCompilationUnit(TestCaseResource resource) throws IOException {
 		
-		String sourcePackage= projecttempLocation +"/temp/" +resource.targetSimpleName() + "/src/" + resource.packageName().replace(".", "/");
+		String sourcePackage= projecttempLocation +"/temp/" + projectName + "/src/" + resource.packageName().replace(".", "/");
 		sourcePackage =sourcePackage.replace("\\", "/");
 		File sourcePackagePath = new File(sourcePackage);
 		if (!sourcePackagePath.exists())
@@ -106,8 +107,8 @@ public abstract class AbstractConversionTestCase  {
 			
 			result = result + cufile;
 		
-			String sourceFilePath =projecttempLocation +"/temp/" +resource.targetSimpleName() + "/src";
-			String targetProject = projecttempLocation +"/temp/" +resource.targetSimpleName() + "/" +getConvertedProject();
+			String sourceFilePath =projecttempLocation +"/temp/" +projectName + "/src";
+			String targetProject = projecttempLocation +"/temp/" +projectName + "/" +getConvertedProject();
 			configuration.setSharpenNamespace("nonamespace");
 
 			final SharpenConversionBatch converter = new SharpenConversionBatch(configuration);
@@ -123,7 +124,7 @@ public abstract class AbstractConversionTestCase  {
 			}
 			
 			result= projecttempLocation +"/temp/" +
-										resource.targetSimpleName() + "/" + 
+										projectName + "/" + 
 			                            getConvertedProject() + "/" +
 			                            packageName.replace(".", "/") + "/" +
 					                    cufile.getName().substring(0,cufile.getName().lastIndexOf("."))
