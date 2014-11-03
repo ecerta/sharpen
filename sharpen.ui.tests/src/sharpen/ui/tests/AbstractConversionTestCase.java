@@ -86,6 +86,10 @@ public abstract class AbstractConversionTestCase  {
 	protected void runResourceTestCase(String resourceName) throws IOException {		
 		runResourceTestCase(getConfiguration(), resourceName);
 	}
+	
+	protected void runResourceTestCaseCMD(String resourceName) throws IOException {		
+		runResourceTestCaseCMD(resourceName,resourceName);
+	}
 
 	protected void runResourceTestCase(final Configuration configuration, String resourceName) throws IOException {
 		runResourceTestCase(configuration, resourceName, resourceName);
@@ -94,6 +98,11 @@ public abstract class AbstractConversionTestCase  {
 	protected void runResourceTestCase(final Configuration configuration, String originalResourceName, String expectedResourceName) throws IOException  {
 		TestCaseResource resource = new TestCaseResource(originalResourceName, expectedResourceName);		
 		resource.assertExpectedContent(sharpenResource(configuration, resource));
+	}
+	
+	protected void runResourceTestCaseCMD(String originalResourceName, String expectedResourceName) throws IOException  {
+		TestCaseResource resource = new TestCaseResource(originalResourceName, expectedResourceName);		
+		resource.assertExpectedContent(sharpenResourceCMD(resource));
 	}
 
 	protected String sharpenResource(final Configuration configuration,
@@ -140,6 +149,52 @@ public abstract class AbstractConversionTestCase  {
 		return result;
 	}
 	
+	protected String sharpenResourceCMD(TestCaseResource resource)  {
+		
+		String result ="Success";
+				
+		try {
+			String cu = createCompilationUnit(resource);			
+			File cufile = new File(cu);
+			
+			result = result + cufile;
+		
+			String sourceFilePath =projecttempLocation +"/temp/" +projectName + "/src";
+			
+
+			SharpenApplication AppCmd = new SharpenApplication();
+			
+			String[] args = new String[3];
+			
+			args[0] =sourceFilePath;
+			args[1] = "-sharpenNamespace";
+			args[2] = "nonamespace";
+			
+			AppCmd.start(args);
+			
+			
+			String packageName = resource.packageName();
+			if(resource.packageName().isEmpty())
+			{
+				packageName ="src";
+			}
+			
+			result= projecttempLocation +"/temp/" +
+										projectName + "/" + 
+			                            getConvertedProject() + "/" +
+			                            packageName.replace(".", "/") + "/" +
+					                    cufile.getName().substring(0,cufile.getName().lastIndexOf("."))
+			                            + ".cs";
+			
+			 byte[] encoded = Files.readAllBytes(Paths.get(result));
+			 return new String(encoded);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			result = result + e.toString();
+		}
+		return result;
+	}
 	protected Configuration getConfiguration() {
 		return newConfiguration();
 	}
@@ -264,7 +319,7 @@ public abstract class AbstractConversionTestCase  {
 	}
 
 	protected String getConvertedProject() {
-		return _project.getProjectName() + "_net";//SharpenConstants.SHARPENED_PROJECT_SUFFIX;
+		return _project.getProjectName() + SharpenConstants.SHARPENED_PROJECT_SUFFIX;
 	}
 
 	
