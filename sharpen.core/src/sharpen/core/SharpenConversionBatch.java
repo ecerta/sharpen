@@ -130,8 +130,8 @@ public class SharpenConversionBatch extends ConversionBatch {
 	}
 
 	private String getTargetPackageFolder(String targetFolder, String packageName) {
-		 targetFolder = targetFolder  +"/"  + packageName.replace('.', '/');
-		 return targetFolder.toLowerCase();
+		 targetFolder = targetFolder  +"/"  + packageName.replace('.', '/').toLowerCase();
+		 return targetFolder;
 	}
 	
 	private String getNameWithoutExtension(String name) {
