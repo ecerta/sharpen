@@ -415,7 +415,7 @@ public class UnclassifiedConversionTestCase extends AbstractConversionTestCase {
 		runResourceTestCase("Try2");
 	}
 	
-	//@Test
+	@Test
 	public void testThrow() throws Throwable {
 		runResourceTestCase("Throw1");
 	}
@@ -445,7 +445,7 @@ public class UnclassifiedConversionTestCase extends AbstractConversionTestCase {
 		runResourceTestCase("ObjectMethods3");
 	}
 	
-	//@Test
+	@Test
 	public void testExceptionMapping() throws Throwable {
 		runResourceTestCase("ExceptionMapping1");
 	}
