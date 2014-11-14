@@ -91,7 +91,7 @@ public class JavaProjectCmd {
         	  String fileName = f.getAbsoluteFile().getName();
         	  
         	  if (fileName.substring(fileName.lastIndexOf(".")+1).equalsIgnoreCase("java"))
-        		  files.add(f.getAbsoluteFile().toString());            	  
+        		  files.add(f.getAbsoluteFile().toString().replace("\\","/"));            	  
           }
         }		
   	}
