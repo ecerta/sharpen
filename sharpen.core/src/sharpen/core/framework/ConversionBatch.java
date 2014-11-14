@@ -149,7 +149,7 @@ public abstract class ConversionBatch {
 			IOException {
 		try {
 			_progressMonitor.subTask(pair.source);
-			convertCompilationUnit(resolver, pair.source, pair.ast);
+			convertCompilationUnit(resolver, pair.source.replace("\\", "/"), pair.ast);
 		} finally {
 			_progressMonitor.worked(1);
 		}
