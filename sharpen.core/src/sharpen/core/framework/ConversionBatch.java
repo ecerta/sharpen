@@ -148,7 +148,7 @@ public abstract class ConversionBatch {
 	private void convertPair(final ASTResolver resolver, final CompilationUnitPair pair) throws CoreException,
 			IOException {
 		try {
-			_progressMonitor.subTask(pair.source);
+			_progressMonitor.subTask(pair.source.replace("\\", "/"));
 			convertCompilationUnit(resolver, pair.source.replace("\\", "/"), pair.ast);
 		} finally {
 			_progressMonitor.worked(1);
