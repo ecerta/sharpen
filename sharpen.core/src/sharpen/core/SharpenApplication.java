@@ -1,32 +1,13 @@
-/* Copyright (C) 2004 - 2008  Versant Inc.  http://www.db4o.com
-
-This file is part of the sharpen open source java to c# translator.
-
-sharpen is free software; you can redistribute it and/or modify it under
-the terms of version 2 of the GNU General Public License as published
-by the Free Software Foundation and as clarified by db4objects' GPL 
-interpretation policy, available at
-http://www.db4o.com/about/company/legalpolicies/gplinterpretation/
-Alternatively you can write to db4objects, Inc., 1900 S Norfolk Street,
-Suite 350, San Mateo, CA 94403, USA.
-
-sharpen is distributed in the hope that it will be useful, but WITHOUT ANY
-WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. */
-
 package sharpen.core;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Properties;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -40,6 +21,10 @@ public class SharpenApplication {
 	public void start(String[] args) throws Exception {
 		try {
 			_args = SharpenCommandLine.parse(args);
+			if(_args.help==true){
+				displayHelp();
+				return;
+			}
 			System.err.println("Configuration Class: " + _args.configurationClass);
 			System.err.println("Configuration Class: " +_args.runtimeTypeName);
 			Sharpen.getDefault().configuration(ConfigurationFactory.newConfiguration(_args.configurationClass, _args.runtimeTypeName));
@@ -51,7 +36,98 @@ public class SharpenApplication {
 		}
 	}
 
-	
+	void displayHelp()
+	{
+		Properties prop = new Properties();
+    	InputStream input = null;
+ 
+    	try {
+ 
+    		String filename = "sharpen.properties";
+    		input = SharpenApplication.class.getClassLoader().getResourceAsStream(filename);
+    		if(input==null){
+    	            System.out.println("Unable to find " + filename);
+    		    return;
+    		}
+    		prop.load(input);
+    		
+    		System.out.println("**************Help Start**************************");
+            //get the property value and print it out
+    		System.out.println(prop.getProperty("111"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("222"));
+    		System.out.println();
+    		System.out.println("Valid command line options are as following:");
+    		System.out.println(prop.getProperty("01"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("02"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("03"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("04"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("05"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("06"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("07"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("08"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("09"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("10"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("11"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("12"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("13"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("14"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("15"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("16"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("17"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("18"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("19"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("20"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("21"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("22"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("23"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("24"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("25"));
+    		System.out.println();
+    		System.out.println(prop.getProperty("26"));
+    		System.out.println();
+            System.out.println(prop.getProperty("27"));
+   
+            System.out.println("**************Help End**************************");
+       
+  
+    	} catch (IOException ex) {
+    		ex.printStackTrace();
+        } finally{
+        	if(input!=null){
+        		try {
+				input.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+        	}
+        }
+		
+	}
 
 	void safeRun() throws Exception {
 
@@ -204,5 +280,6 @@ public class SharpenApplication {
 	
 	private static void ods(String message) {
 		System.out.println(message);
-	}	
+	}
 }
+
