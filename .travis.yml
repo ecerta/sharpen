@@ -1,0 +1,20 @@
+language: java
+before_install: mvn install -DskipTests=true -DfinalName=sharpen
+install: mvn test
+
+notifications:
+  email:
+    recipients:
+      - raj041174@yahoo.com
+      - nathanael.jones@gmail.com
+    on_success: always
+deploy:
+  provider: releases
+  user: avasp
+  password:
+    secure: qGaXQX/OV4RnGG6ARh6F8zEA0QjFX5p4deKvcRBFrdrnbG5ufpP1Z0cw0Oa/n9M35/7BlQMGNjoh6Nj2F9yax0m25WbU80Aw4HSiste6o6lD+OC3ngV+X7Lsezfxt8ScxHV22gUZxdsn/9MWLls1a18n+cK9uUMIQBmHvSPyUHk=
+  file: sharpen.core/target/sharpen$-jar-with-dependencies.jar
+  skip_cleanup: true
+  on:
+    all_branches: true
+    tags: true
