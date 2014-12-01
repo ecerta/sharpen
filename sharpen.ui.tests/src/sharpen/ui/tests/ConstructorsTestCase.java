@@ -1,18 +1,18 @@
 package sharpen.ui.tests;
-import org.junit.Test;
+//import org.junit.Test;
 
 public class ConstructorsTestCase extends AbstractConversionTestCase {
-	@Test
+	//@Test
 	public void testConstructorDeclaration() throws Throwable {
 		runResourceTestCase("Constructors1");
 	}
 	
-	@Test
+	//@Test
 	public void testConstructorInvocationFromConstructor() throws Throwable {
 		runResourceTestCase("Constructors2");
 	}
 	
-	@Test
+	//@Test
 	public void testInitializers() throws Throwable {
 		runResourceTestCase("Initializers");
 	}

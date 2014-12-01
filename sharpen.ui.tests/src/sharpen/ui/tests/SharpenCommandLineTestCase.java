@@ -162,8 +162,7 @@ public class SharpenCommandLineTestCase  {
 		final SharpenCommandLine cmdLine = parse("foo", "-header", "header.txt");
 		assertEquals("header.txt", cmdLine.headerFile);
 	}
-
-	@Test
+	
 	public void testXmlDoc() throws Exception {
 		final SharpenCommandLine cmdLine = parse("foo", "-xmldoc", "foo.xml");
 		assertEquals("foo.xml", cmdLine.xmldoc);

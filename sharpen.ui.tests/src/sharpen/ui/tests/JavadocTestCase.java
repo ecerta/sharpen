@@ -24,39 +24,39 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 package sharpen.ui.tests;
 
 import sharpen.core.*;
-import org.junit.Test;
+//import org.junit.Test;
 
 
 public class JavadocTestCase extends AbstractConversionTestCase {
 	
 
-	@Test
+	//@Test
 	public void testJavadoc() throws Throwable {
 		runResourceTestCase("javadoc/Javadoc1");
 	}
 	
 
-	@Test
+	//@Test
 	public void testLinkWithLabel() throws Throwable {
 		runResourceTestCase("javadoc/LinkWithLabel");
 	}
 	
-	@Test
+	//@Test
 	public void testPropertyParamTag() throws Throwable {
 		runResourceTestCase("javadoc/PropertyParamTag");
 	}
 	
-	@Test
+	//@Test
 	public void testGenericTypeReference() throws Throwable {
 		runResourceTestCase("javadoc/GenericTypeReference");
 	}
 	
-	@Test
+	//@Test
 	public void testDeprecatedBecomesObsolete() throws Throwable {
 		runResourceTestCase("javadoc/Deprecated");
 	}
 	
-	@Test
+	//@Test
 	public void testXmlDocumentOverlay() throws Throwable {
 		String resourceName = "javadoc/XmlDocOverlay";
 		runResourceTestCase(newDocumentationOverlayConfiguration(resourceName + ".xml"), resourceName);

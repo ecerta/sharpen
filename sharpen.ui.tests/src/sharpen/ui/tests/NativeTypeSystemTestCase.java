@@ -25,7 +25,7 @@ import sharpen.core.Configuration;
 import org.junit.Test;
 
 public class NativeTypeSystemTestCase extends AbstractConversionTestCase {
-	@Test
+	//@Test
 	public void testClassToType() throws Throwable {
 		runResourceTestCase("nativeTypeSystem/ClassToType");
 	}
@@ -35,7 +35,7 @@ public class NativeTypeSystemTestCase extends AbstractConversionTestCase {
 		runResourceTestCase("nativeTypeSystem/StringMethods1");
 	}
 	
-	@Test
+	//@Test
 	public void testReflection() throws Throwable {
 		runResourceTestCase(nativePascalCase(), "nativeTypeSystem/Reflection");
 	}

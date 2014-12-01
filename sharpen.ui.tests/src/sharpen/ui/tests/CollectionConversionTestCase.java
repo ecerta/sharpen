@@ -26,7 +26,7 @@ import org.junit.Test;
 
 public class CollectionConversionTestCase extends AbstractConversionTestCase {
 	
-	@Test
+	//@Test
 	public void testComparatorSort() throws Throwable {
 		runResourceTestCase(newPascalCasePlusConfiguration(), resourcePath("ComparatorSort"));
 	}
@@ -36,7 +36,7 @@ public class CollectionConversionTestCase extends AbstractConversionTestCase {
 		runResourceTestCase("Set");
 	}
 	
-	@Test
+	//@Test
 	public void testMap1() throws Throwable {
 		runResourceTestCase("Map1");
 	}
@@ -46,12 +46,12 @@ public class CollectionConversionTestCase extends AbstractConversionTestCase {
 		runResourceTestCase("List1");
 	}
 	
-	@Test
+	//@Test
 	public void testEntrySet() throws Throwable {
 		runResourceTestCase("EntrySet1");
 	}
 	
-	@Test
+	//@Test
 	public void testIterator() throws Throwable {
 		runResourceTestCase("Iterator1");
 	}
@@ -61,7 +61,7 @@ public class CollectionConversionTestCase extends AbstractConversionTestCase {
 		runResourceTestCase("Vector1");
 	}
 	
-	@Test
+	//@Test
 	public void testHashtable() throws Throwable {
 		runResourceTestCase("Hashtable1");
 	}

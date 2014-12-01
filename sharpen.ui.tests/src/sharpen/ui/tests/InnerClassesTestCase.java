@@ -59,7 +59,7 @@ public class InnerClassesTestCase extends AbstractConversionTestCase {
 	}
 	
 	// SHA-75
-	@Test
+	//@Test
 	public void _testGenericAnonymousWithPrivateMethod() throws Throwable {
 		runResourceTestCase("GenericAnonymousWithAdditionalMethods");
 	}
@@ -68,7 +68,7 @@ public class InnerClassesTestCase extends AbstractConversionTestCase {
 	public void testAnonymousThis() throws Throwable {
 		runResourceTestCase("AnonymousInnerClass12");
 	}
-	@Test
+	//@Test
 	public void testAnonymousTypeWithCtorArguments() throws Throwable {
 		runResourceTestCase("AnonymousInnerClass13");
 	}

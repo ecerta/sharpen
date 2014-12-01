@@ -121,6 +121,7 @@ public class TestCaseResource {
 	}
 	
 	private static String fileContents(String file) throws IOException {
+		//File f = new File(file);
 		InputStream stream = new FileInputStream(file);
 		try {
 			return InputStreamUtility.readString(stream);

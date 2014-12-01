@@ -39,7 +39,7 @@ public class GenericsTestCase extends AbstractConversionTestCase {
 		runResourceTestCase(config, "generics/GenericRuntimeTypeParameters");
 	}
 	
-	@Test
+	//@Test
 	public void testCollectionMappings() throws Throwable {
 		runResourceTestCase("CollectionMappings");
 	}
@@ -49,7 +49,7 @@ public class GenericsTestCase extends AbstractConversionTestCase {
 		runResourceTestCase("GenericMethodImpl");
 	}
 	
-	@Test
+	//@Test
 	public void testWildcardTypes() throws Throwable {
 		runResourceTestCase("WildcardTypes");
 	}

@@ -21,17 +21,19 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 /* Copyright (C) 2006 Versant Inc. http://www.db4o.com */
 
-package sharpen.ui.tests;
+package sharpen.ui.tests; 
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import java.io.*;
 
+
+
 public class ProblemsOutputTestCase extends AbstractConversionTestCase {
 	
-	@Test
+	//@Test
 	public void testProblemsGoToStderr() throws Throwable {		
 		final ByteArrayOutputStream stderr = new ByteArrayOutputStream();
 		

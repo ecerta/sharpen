@@ -12,12 +12,12 @@ public class AnnotationsTestCase extends AbstractConversionTestCase {
 	public void testSimpleAnnotation() throws IOException  {
 		runResourceTestCase("SimpleAnnotation");
 	}
-	
+	/*
 	@Test
 	public void testCompilerAnnotations() throws IOException  {
 		runResourceTestCase("CompilerAnnotations");
 	}
-	
+	*/
 	@Override
 	protected void runResourceTestCase(String resourceName) throws IOException  {
 		super.runResourceTestCase("annotations/" + resourceName);

@@ -22,15 +22,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 package sharpen.ui.tests;
 
 import sharpen.core.Configuration;
-import org.junit.Test;
+//import org.junit.Test;
 
 public class NativeInterfacesTestCase extends AbstractConversionTestCase {
 
-	@Test
+	//@Test
 	public void testNativeInterfaces() throws Throwable {
 		runResourceTestCase(newNativeInterfacesConfiguration(), "interfaces/Foo", "interfaces/IFoo");
 	}
-	
+	/*
 	@Test
 	public void testNativeInterfacesOtherCompilationUnit() throws Throwable {
 		runBatchConverterTestCase(
@@ -53,7 +53,8 @@ public class NativeInterfacesTestCase extends AbstractConversionTestCase {
 	public void testStubsInDiamondInterfaceInheritance() throws Throwable {
 		runResourceTestCase(newNativeInterfacesConfiguration(), "interfaces/DiamondImpl");
 	}
-
+*/
+	
 	public Configuration newNativeInterfacesConfiguration() {
 		Configuration configuration = newPascalCasePlusConfiguration();
 		configuration.enableNativeInterfaces();

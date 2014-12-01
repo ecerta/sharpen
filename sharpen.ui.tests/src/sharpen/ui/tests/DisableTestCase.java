@@ -46,11 +46,11 @@ public class DisableTestCase extends AbstractConversionTestCase {
 		runResourceTestCase("disable/DisableInnerClass");
 	}
 	
-	@Test
+	//@Test
 	public void testDisableCompilationUnit() throws Throwable {
 		runResourceTestCase(newConfigWithOrganizeUsings(), "disable/DisableCompilationUnit");
 	}
-	
+
 	private Configuration newConfigWithOrganizeUsings() {
 		Configuration config = ConfigurationFactory.defaultConfiguration();
 		config.enableOrganizeUsings();
