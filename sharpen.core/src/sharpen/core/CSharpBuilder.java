@@ -63,6 +63,8 @@ public class CSharpBuilder extends ASTVisitor {
 
 	protected CSTypeDeclaration _currentAuxillaryType;
 
+	private String _content;
+
 	private CSBlock _currentBlock;
 
 	private CSExpression _currentExpression;
@@ -131,6 +133,10 @@ public class CSharpBuilder extends ASTVisitor {
 		_ast = ast;
 	}
 
+	public void setSourceContent(String content) {
+		_content = content;
+	}
+
 	public void run() {
 		if (null == warningHandler() || null == _ast) {
 			throw new IllegalStateException();
@@ -157,8 +163,16 @@ public class CSharpBuilder extends ASTVisitor {
 		try {
 			ICompilationUnit cu = (ICompilationUnit) _ast.getJavaElement();
 			if(cu != null){
-				return cu.getBuffer().getText(startPosition, length);
+				IBuffer buffer = cu.getBuffer();
+				if(buffer != null){
+					return buffer.getText(startPosition, length);
+				}
 			}
+
+			if(_content != null && !_content.isEmpty()){
+				return _content.substring(startPosition, startPosition + length);
+			}
+
 			return ""; 
 		} catch (JavaModelException e) {
 			throw new RuntimeException(e);
