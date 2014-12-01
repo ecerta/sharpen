@@ -5,8 +5,8 @@ install: mvn test
 notifications:
   email:
     recipients:
-      - raj041174@yahoocom
-      - abhinav.rk.1908@gmail.com 
+      - raj041174@yahoo.com
+      - nathanael.jones@gmail.com
     on_success: always
 deploy:
   provider: releases
