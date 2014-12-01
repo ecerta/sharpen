@@ -33,7 +33,7 @@ public class CSharpPrinter extends CSVisitor {
 	protected IndentedWriter _writer;
 	protected CSTypeDeclaration _currentType;
 	private int _lastPrintedCommentIndex;
-	private List<CSLineComment> _comments;
+	private List<CSComment> _comments;
 
 	public CSharpPrinter() {
 	}
@@ -431,7 +431,14 @@ public class CSharpPrinter extends CSVisitor {
 	public void visit(CSLineComment node) {
 		writeIndentedLine(node.text());
 	}
-	
+
+	@Override
+	public void visit(CSBlockComment node) {
+		for(String line : node.lines()){
+			writeIndentedLine(line);
+		}
+	}
+
 	public void visit(CSReturnStatement node) {
 		
 		printPrecedingComments(node);
@@ -1029,7 +1036,7 @@ public class CSharpPrinter extends CSVisitor {
 		}
 		return "";
 	}
-	
+
     protected void enterBody() {
 //		writeLine();
         writeIndentedLine("{");

@@ -154,7 +154,7 @@ public class CSharpBuilder extends ASTVisitor {
 	
 	@Override
 	public boolean visit(BlockComment node) {
-		_compilationUnit.addComment(new CSLineComment(node.getStartPosition(), getText(node.getStartPosition(), node
+		_compilationUnit.addComment(new CSBlockComment(node.getStartPosition(), getText(node.getStartPosition(), node
 		        .getLength())));
 		return false;
 	};

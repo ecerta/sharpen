@@ -21,18 +21,22 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 /* Copyright (C) 2004 - 2006 Versant Inc. http://www.db4o.com */
 
-package sharpen.ui.tests;
-import org.junit.Test;
+package sharpen.core.csharp.ast;
 
-public class BlockCommentConversionTestCase extends AbstractConversionTestCase {
 
-	@Test
-	public void headerBlockComments() throws Throwable {
-		runResourceTestCase("comments/HeaderBlock");
+public class CSComment extends CSNode {
+
+	private final int _startPosition;
+
+	public CSComment(int startPosition) {
+		_startPosition = startPosition;
 	}
 
-	@Test
-	public void bodyBlockComments() throws Throwable {
-		runResourceTestCase("comments/BodyBlock");
+	@Override
+	public void accept(CSVisitor visitor) {
+	}
+
+	public int startPosition() {
+		return _startPosition;
 	}
 }
