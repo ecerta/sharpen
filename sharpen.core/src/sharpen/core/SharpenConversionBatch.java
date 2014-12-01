@@ -57,7 +57,7 @@ public class SharpenConversionBatch extends ConversionBatch {
 	
 	public void setTargetProject(String projectPath) {
 		File fprojectPath = new File(projectPath);
-		if (fprojectPath.isDirectory() && !fprojectPath.exists())
+		if ((fprojectPath.isDirectory() ==true) && (fprojectPath.exists()==false))
 		{
 			fprojectPath.mkdir();
 		}
@@ -85,6 +85,7 @@ public class SharpenConversionBatch extends ConversionBatch {
 	 */
 	private void saveConvertedFile(String cu, CSCompilationUnit csModule, StringWriter convertedContents) throws  IOException, CoreException {
 		String newName = csModule.elementName();
+		
 		if (newName == null) {
 			newName = getNameWithoutExtension(cu) + ".cs";
 		}
@@ -142,4 +143,5 @@ public class SharpenConversionBatch extends ConversionBatch {
 	public Configuration getConfiguration() {
 		return _configuration;
 	}
+
 }

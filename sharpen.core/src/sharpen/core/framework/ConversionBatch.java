@@ -119,6 +119,7 @@ public abstract class ConversionBatch {
 		}
 		
 		final ArrayList<CompilationUnitPair> pairs = parseCompilationUnits();
+		
 		final ASTResolver resolver = new DefaultASTResolver(pairs);
 		
 		_progressMonitor.beginTask("converting", pairs.size());
