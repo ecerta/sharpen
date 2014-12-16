@@ -1,3 +1,5 @@
+using javadoc;
+
 namespace javadoc
 {
 	internal class PropertyParamTag

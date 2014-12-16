@@ -35,7 +35,7 @@ namespace nativeTypeSystem
 			run2(clazz);
 		}
 
-		private void run2(System.Type clazz)
+		private void run2<_T0>(System.Type<_T0> clazz)
 		{
 			string foo = clazz.FullName;
 			bool bar = clazz.IsInstanceOfType("foo");

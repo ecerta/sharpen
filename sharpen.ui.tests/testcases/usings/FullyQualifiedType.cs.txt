@@ -1,3 +1,5 @@
+using Usings;
+
 namespace Usings
 {
 	internal class Test

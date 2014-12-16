@@ -32,8 +32,8 @@ public class EventConversionTestCase extends AbstractConversionTestCase {
 		config.mapEventAdd("events.Event4.addListener");
 		config.mapEvent("events.EventRegistry.foo", "events.FooEventArgs");
 		runBatchConverterTestCase(config,
-				new TestCaseResource("events/EventMapping"),
-				new TestCaseResource("events/EventMappingLib") {
+				new TestCaseResource(projecttempLocation,"events/EventMapping"),
+				new TestCaseResource(projecttempLocation,"events/EventMappingLib") {
 					@Override
 					public boolean isSupportingLibrary() {
 						return true;

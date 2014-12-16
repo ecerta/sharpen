@@ -2,12 +2,12 @@ namespace properties
 {
 	internal class CustomIterator : System.Collections.IEnumerator
 	{
-		public virtual bool MoveNext()
+		public override bool MoveNext()
 		{
 			return false;
 		}
 
-		public virtual object Current
+		public override object Current
 		{
 			get
 			{
@@ -15,7 +15,7 @@ namespace properties
 			}
 		}
 
-		public virtual void Remove()
+		public override void Remove()
 		{
 		}
 	}

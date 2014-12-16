@@ -21,13 +21,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 /* Copyright (C) 2006 Versant Inc. http://www.db4o.com */
 
-package sharpen.ui.tests;
+package sharpen.ui.tests; 
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 import java.io.*;
+
+
 
 public class ProblemsOutputTestCase extends AbstractConversionTestCase {
 	
@@ -39,15 +41,17 @@ public class ProblemsOutputTestCase extends AbstractConversionTestCase {
 		try {
 			System.setErr(new PrintStream(stderr));
 			
-			final String resourcePath = "/TestProject/src/problems/Spam.java";			
+			String resourcePath = projecttempLocation + "/temp/DPrj/src/problems/Spam.java";	
+			resourcePath = resourcePath.replace("\\", "/");
 			try {
 				runResourceTestCase("problems/Spam");
 			} catch (RuntimeException x) {
-				assertTrue(x.getMessage().contains(resourcePath));
+				String excepStr= x.getMessage().replace("\\", "/");
+				assertTrue(excepStr.contains(resourcePath));
 			}			
 			assertEquals(
 					resourcePath + "(4): Eggs cannot be resolved to a type",
-					stderr.toString().trim());
+					stderr.toString().replace("\\", "/").trim());
 		} finally {
 			System.setErr(saved);
 		}

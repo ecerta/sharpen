@@ -78,7 +78,7 @@ public class BatchConverterTestCase extends AbstractConversionTestCase {
 	private void runResourceTestCaseWithTargetProject(String path)
 			throws Throwable {
 
-		TestCaseResource resource = new TestCaseResource(path);
+		TestCaseResource resource = new TestCaseResource(projecttempLocation,path);
 		String cu = createCompilationUnit(resource,"TargetProject");
 		
 		String targetProject= projecttempLocation +"/temp/" +

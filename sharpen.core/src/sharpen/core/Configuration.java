@@ -327,6 +327,13 @@ public abstract class Configuration {
 		_namespaceMappings.addAll(namespaceMappings);
 	}
 	
+	public String getNamespaceMappings(String from) {
+		for (NameMapping mapping : _namespaceMappings) {
+			if(mapping.from.equalsIgnoreCase(from)) return mapping.to;
+		}
+		return from;
+	}
+	
 	public void mapMembers(Map<String, MemberMapping> memberMappings) {
 		_memberMappings.putAll(memberMappings);
 	}

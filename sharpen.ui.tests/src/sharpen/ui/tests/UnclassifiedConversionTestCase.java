@@ -31,7 +31,7 @@ public class UnclassifiedConversionTestCase extends AbstractConversionTestCase {
 	@Test
 	public void testHeader() throws Exception {
 		Configuration configuration = getConfiguration();
-		configuration.setHeader(ResourceUtility.getStringContents("resources/header.txt"));
+		configuration.setHeader(ResourceUtility.getStringContents(projecttempLocation + "/resources/header.txt"));
 		
 		runResourceTestCase(configuration, "HeaderSupport");
 	}

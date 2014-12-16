@@ -1,3 +1,5 @@
+using javadoc;
+
 namespace javadoc
 {
 	[System.ObsoleteAttribute(@"Use DeprecatedAlternatives class instead.")]

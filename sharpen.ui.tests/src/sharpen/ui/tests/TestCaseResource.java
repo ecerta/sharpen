@@ -35,6 +35,7 @@ import org.junit.Assert;
  */
 public class TestCaseResource {
 	
+	private final String _projectDataLocation;
 	private final String _originalPath;
 	private final String _packageName;
 	private final String _simpleName;
@@ -45,18 +46,25 @@ public class TestCaseResource {
 	 * 
 	 * @param path relative path to the resource from the root of the project, ex.: EmptyClass, com/db4o/Test1.
 	 */
-	public TestCaseResource(String originalPath, String expectedPath) {
+	public TestCaseResource(String projectDataLocation,String originalPath, String expectedPath) {
 		
 		String parts[] = originalPath.split("/");
 		
+		_projectDataLocation= projectDataLocation;
 		_simpleName = parts[parts.length-1];
 		_packageName = join(parts, parts.length-1, ".");
 		_originalPath = originalPath;
 		_expectedPath = expectedPath;
 	}
 	
-	public TestCaseResource(String path) {
-		this(path, path);
+	public String getExpectedPathNane() {
+		String parts[] = _expectedPath.split("/");
+		if(parts.length==0) return _expectedPath;
+		else return parts[parts.length-1];
+	}
+	
+	public TestCaseResource(String projectDataLocation,String path) {
+		this(projectDataLocation,path, path);
 	}
 	
 	public void assertExpectedContent(String actualContents) throws IOException {
@@ -69,19 +77,17 @@ public class TestCaseResource {
 	}
 	
 	public String actualStringContents() throws IOException {
-		return ResourceUtility.getStringContents(_originalPath + actualPathSuffix(), getClass());
+		return ResourceUtility.getStringContents(_projectDataLocation + "/" + _originalPath + actualPathSuffix());
 	}
 	
-	public String actualStringContents(String pathofTestResource) throws IOException {
-		return ResourceUtility.getStringContents(pathofTestResource + "/" + _originalPath + actualPathSuffix(), getClass());
-	}
+	
 
 	protected String actualPathSuffix() {
 		return ".java.txt";
 	}
 	
 	public String expectedStringContents() throws IOException {
-		return ResourceUtility.getStringContents(_expectedPath + expectedPathSuffix(), getClass());
+		return ResourceUtility.getStringContents(_projectDataLocation +"/"+_expectedPath + expectedPathSuffix());
 	}
 
 	protected String expectedPathSuffix() {

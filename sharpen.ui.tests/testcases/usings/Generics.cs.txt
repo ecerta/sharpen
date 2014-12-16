@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Usings;
 
 namespace Usings
 {
@@ -8,7 +9,7 @@ namespace Usings
 		internal static void Run()
 		{
 			IDictionary<int, string> m = new Dictionary<int, string>();
-			foreach (KeyValuePair<int, string> e in m)
+			foreach (KeyValuePair<int, string> e in m.EntrySet())
 			{
 				Print(e.Key);
 				Print(e.Value);

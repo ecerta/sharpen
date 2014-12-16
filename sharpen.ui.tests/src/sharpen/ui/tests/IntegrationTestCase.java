@@ -9,15 +9,15 @@ public class IntegrationTestCase extends AbstractConversionTestCase {
 	public void testNamespaceMappingWithTypeRenaming() throws Throwable {
 		final Configuration config = getConfiguration();
 		config.enableOrganizeUsings();
-		config.mapNamespace("integration\\.namespaceMapping\\.foo", "UbberFoo");
+		config.mapNamespace("integration.namespaceMapping.foo", "UbberFoo");
 		
 		runBatchConverterTestCase(config,
-				new TestCaseResource("integration/namespaceMapping/foo/Foo") {
+				new TestCaseResource(projecttempLocation,"integration/namespaceMapping/foo/Foo") {
 					@Override public String targetSimpleName() {
 						return "FooFactory";
 					}
 				},
-				new TestCaseResource("integration/namespaceMapping/bar/FooUsage"));
+				new TestCaseResource(projecttempLocation,"integration/namespaceMapping/bar/FooUsage"));
 	}
 
 }

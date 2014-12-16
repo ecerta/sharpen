@@ -26,6 +26,7 @@ package sharpen.ui.tests;
 import java.io.IOException;
 
 import sharpen.core.*;
+
 import org.junit.Test;
 
 
@@ -58,10 +59,9 @@ public class JavadocTestCase extends AbstractConversionTestCase {
 		runResourceTestCase("javadoc/Deprecated");
 	}
 	
-	@Test
 	public void testXmlDocumentOverlay() throws Throwable {
-		String resourceName = "javadoc/XmlDocOverlay";
-		runResourceTestCase(newDocumentationOverlayConfiguration(resourceName + ".xml"), resourceName);
+		String resourceName ="javadoc/XmlDocOverlay";
+		runResourceTestCase(newDocumentationOverlayConfiguration(projecttempLocation+ "/"+ resourceName + ".xml"), resourceName);
 	}
 	
 	

@@ -35,9 +35,9 @@ public abstract class AbstractConversionTestCase  {
 	protected JavaProjectCmd _project;
 	private String projectName="DPrj";
 	//To Run from MAVEN
-	protected String projecttempLocation = System.getProperty("user.dir") + "/sharpen.core/target/testcases";
+	protected String projecttempLocation = System.getProperty("user.dir").replace("\\", "/") + "/sharpen.core/target/testcases";
 	//To Run From Eclipse GUI
-	//protected String projecttempLocation = System.getProperty("user.dir") + "/sharpen.ui.tests/testcases";
+	//protected String projecttempLocation = System.getProperty("user.dir").replace("\\", "/") + "/testcases";
 	@Before
 	public void setUp() throws Exception {
 		Sharpen.getDefault().configuration(configuration());
@@ -59,9 +59,7 @@ public abstract class AbstractConversionTestCase  {
 	 * @throws IOException
 	 */
 	protected String createCompilationUnit(TestCaseResource resource) throws IOException {
-		
 		String sourcePackage= projecttempLocation +"/temp/" + projectName + "/src/" + resource.packageName().replace(".", "/");
-		sourcePackage =sourcePackage.replace("\\", "/");
 		File sourcePackagePath = new File(sourcePackage);
 		if (!sourcePackagePath.exists())
 		{
@@ -71,9 +69,7 @@ public abstract class AbstractConversionTestCase  {
 	}
 	
 	protected String createCompilationUnit(TestCaseResource resource, String targetProject) throws IOException  {
-		
 		String sourcePackage= projecttempLocation +"/temp/" + targetProject + "/src/" + resource.packageName().replace(".", "/");
-		sourcePackage =sourcePackage.replace("\\", "/");
 		File sourcePackagePath = new File(sourcePackage);
 		if (!sourcePackagePath.exists())
 		{
@@ -96,12 +92,12 @@ public abstract class AbstractConversionTestCase  {
 	}
 	
 	protected void runResourceTestCase(final Configuration configuration, String originalResourceName, String expectedResourceName) throws IOException  {
-		TestCaseResource resource = new TestCaseResource(originalResourceName, expectedResourceName);		
+		TestCaseResource resource = new TestCaseResource(projecttempLocation,originalResourceName, expectedResourceName);		
 		resource.assertExpectedContent(sharpenResource(configuration, resource));
 	}
 	
 	protected void runResourceTestCaseCMD(String originalResourceName, String expectedResourceName) throws IOException  {
-		TestCaseResource resource = new TestCaseResource(originalResourceName, expectedResourceName);		
+		TestCaseResource resource = new TestCaseResource(projecttempLocation,originalResourceName, expectedResourceName);		
 		resource.assertExpectedContent(sharpenResourceCMD(resource));
 	}
 
@@ -124,10 +120,11 @@ public abstract class AbstractConversionTestCase  {
 			converter.setsourceFiles(new String[] { cu });
 			converter.setsourcePathEntries(sourceFilePath);
 			converter.setTargetProject(targetProject);
+			converter.setclassPathEntries(_project.getclassPath());
 			converter.run();
 			
-			String packageName = resource.packageName();
-			if(resource.packageName().isEmpty())
+			String packageName = configuration.getNamespaceMappings(resource.packageName());
+			if(packageName.isEmpty())
 			{
 				packageName ="src";
 			}
@@ -136,15 +133,14 @@ public abstract class AbstractConversionTestCase  {
 										projectName + "/" + 
 			                            getConvertedProject() + "/" +
 			                            packageName.replace(".", "/") + "/" +
-					                    cufile.getName().substring(0,cufile.getName().lastIndexOf("."))
-			                            + ".cs";
+			                            resource.getExpectedPathNane() +".cs";
 			
 			 byte[] encoded = Files.readAllBytes(Paths.get(result));
 			 return new String(encoded);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-			result = result + e.toString();
+			//e.printStackTrace();
+			result = "";
 		}
 		return result;
 	}
@@ -174,7 +170,7 @@ public abstract class AbstractConversionTestCase  {
 			
 			
 			String packageName = resource.packageName();
-			if(resource.packageName().isEmpty())
+			if(packageName.isEmpty())
 			{
 				packageName ="src";
 			}
@@ -183,15 +179,14 @@ public abstract class AbstractConversionTestCase  {
 										projectName + "/" + 
 			                            getConvertedProject() + "/" +
 			                            packageName.replace(".", "/") + "/" +
-					                    cufile.getName().substring(0,cufile.getName().lastIndexOf("."))
-			                            + ".cs";
+			                            resource.getExpectedPathNane() +".cs";
 			
 			 byte[] encoded = Files.readAllBytes(Paths.get(result));
 			 return new String(encoded);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-			result = result + e.toString();
+			//e.printStackTrace();
+			result = "";
 		}
 		return result;
 	}
@@ -222,7 +217,7 @@ public abstract class AbstractConversionTestCase  {
 	private TestCaseResource[] toTestCaseResources(String... resourceNames) {
 		final TestCaseResource[] resources = new TestCaseResource[resourceNames.length];
 		for (int i=0; i<resourceNames.length; ++i) {
-			resources[i] = new TestCaseResource(resourceNames[i]);
+			resources[i] = new TestCaseResource(projecttempLocation,resourceNames[i]);
 		}
 		return resources;
 	}
@@ -240,7 +235,7 @@ public abstract class AbstractConversionTestCase  {
 
 	private void runBatchConverterTestCaseWithTargetProject(
             Configuration configuration, TestCaseResource... resources) throws IOException, Throwable {
-		String projectName="MultipleSource";
+		String projectName="mprj";
 		String[] units;
 		if(resources.length> 0){
 			units = createCompilationUnits(projectName,resources); 
@@ -301,12 +296,11 @@ public abstract class AbstractConversionTestCase  {
 	 */
 	private void checkConversionResult(Configuration configuration, String targetFolder, TestCaseResource resource) throws Throwable {
 		
-		String packageName = resource.packageName();
-		if(resource.packageName().isEmpty())
+		String packageName = configuration.getNamespaceMappings(resource.packageName()).toLowerCase();
+		if(packageName.isEmpty())
 		{
 			packageName ="src";
 		}
-		
 		String file= targetFolder + "/" +
 		        packageName.replace(".", "/") + "/" +
 		        resource.targetSimpleName() + ".cs";

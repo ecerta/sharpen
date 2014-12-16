@@ -50,7 +50,7 @@ public class IgnoreAnnotationsTestCase extends AbstractConversionTestCase {
 	
 	@Test
 	public void testIgnore() throws Throwable {
-		final String converted = sharpenResource(getConfiguration(), new TestCaseResource("ignore/Ignore"));
+		final String converted = sharpenResource(getConfiguration(), new TestCaseResource(projecttempLocation,"/ignore/Ignore"));
 		StringAssert.assertEqualLines("", converted);
 	}
 	

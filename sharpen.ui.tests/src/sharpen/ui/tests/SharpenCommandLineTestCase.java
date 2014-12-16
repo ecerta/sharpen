@@ -33,6 +33,10 @@ import sharpen.core.io.IO;
 
 public class SharpenCommandLineTestCase  {
 	
+	//To Run from MAVEN
+	private String projecttempLocation = System.getProperty("user.dir").replace("\\", "/") + "/sharpen.core/target/testcases";
+	//To Run From Eclipse GUI
+	//private String projecttempLocation = System.getProperty("user.dir").replace("\\", "/") + "/testcases";
 	@Test
 	public void testDefaults() {
 		SharpenCommandLine cmdLine = parse("core/src");		
@@ -135,7 +139,7 @@ public class SharpenCommandLineTestCase  {
 	
 	@Test
 	public void testResponseFile() throws Exception {
-		String fname = createTempFileFromResource("resources/options");
+		String fname = createTempFileFromResource(projecttempLocation + "/" + "resources/options");
 		SharpenCommandLine cmdLine = parse("foo", "@" + fname);
 		assertEquals("foo", cmdLine.project);
 		assertEquals(1, cmdLine.memberMappings.size());
